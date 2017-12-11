@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.R;
+import com.pchmn.materialchips.model.ChipAvatarUpdatable;
 import com.pchmn.materialchips.model.ChipInterface;
 import com.pchmn.materialchips.util.ColorUtil;
 import com.pchmn.materialchips.util.LetterTileProvider;
@@ -130,7 +131,7 @@ public class FilterableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         final ChipInterface chip = getItem(position);
 
         // avatar
-        if(mChipsInput.chipHasAvatarIcon() && chip.getAvatarUri() != null) {
+        if(mChipsInput.chipHasAvatarIcon() && chip.getAvatarUri() != null && !ChipAvatarUpdatable.class.isAssignableFrom(chip.getClass())) {
             itemViewHolder.mAvatar.setVisibility(View.VISIBLE);
             itemViewHolder.mAvatar.setImageURI(chip.getAvatarUri());
         }
@@ -144,6 +145,10 @@ public class FilterableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         else {
             itemViewHolder.mAvatar.setVisibility(GONE);
+        }
+
+        if (ChipAvatarUpdatable.class.isAssignableFrom(chip.getClass())) {
+            ((ChipAvatarUpdatable)chip).currentImageView(itemViewHolder.mAvatar);
         }
 
         // label

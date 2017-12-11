@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pchmn.materialchips.model.Chip;
+import com.pchmn.materialchips.model.ChipAvatarUpdatable;
 import com.pchmn.materialchips.model.ChipInterface;
 import com.pchmn.materialchips.util.LetterTileProvider;
 import com.pchmn.materialchips.util.ViewUtil;
@@ -215,6 +216,10 @@ public class ChipView extends RelativeLayout {
                 mAvatarIconImageView.setImageDrawable(mAvatarIconDrawable);
             else
                 mAvatarIconImageView.setImageBitmap(mLetterTileProvider.getLetterTile(getLabel()));
+
+            if(ChipAvatarUpdatable.class.isAssignableFrom(mChip.getClass())) {
+                ((ChipAvatarUpdatable) mChip).currentImageView(mAvatarIconImageView);
+            }
         }
     }
 

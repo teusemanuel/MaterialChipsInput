@@ -1,14 +1,11 @@
 package com.pchmn.materialchips.views;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -20,12 +17,10 @@ import android.widget.TextView;
 
 import com.pchmn.materialchips.R;
 import com.pchmn.materialchips.R2;
-import com.pchmn.materialchips.model.Chip;
+import com.pchmn.materialchips.model.ChipAvatarUpdatable;
 import com.pchmn.materialchips.model.ChipInterface;
 import com.pchmn.materialchips.util.ColorUtil;
 import com.pchmn.materialchips.util.LetterTileProvider;
-import com.pchmn.materialchips.util.MyWindowCallback;
-import com.pchmn.materialchips.util.ViewUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -180,6 +175,7 @@ public class DetailedChipView extends RelativeLayout {
         private Drawable avatarDrawable;
         private String name;
         private String info;
+        private ChipAvatarUpdatable chipAvatarUpdatable;
         private ColorStateList textColor;
         private ColorStateList backgroundColor;
         private ColorStateList deleteIconColor;
@@ -208,11 +204,19 @@ public class DetailedChipView extends RelativeLayout {
             return this;
         }
 
+        public Builder chipAvatarUpdatable(ChipAvatarUpdatable chip) {
+            this.chipAvatarUpdatable = chip;
+            return this;
+        }
+
         public Builder chip(ChipInterface chip) {
             this.avatarUri = chip.getAvatarUri();
             this.avatarDrawable = chip.getAvatarDrawable();
             this.name = chip.getLabel();
             this.info = chip.getInfo();
+            if(ChipAvatarUpdatable.class.isAssignableFrom(chip.getClass())) {
+                this.chipAvatarUpdatable = (ChipAvatarUpdatable) chip;
+            }
             return this;
         }
 
@@ -239,12 +243,15 @@ public class DetailedChipView extends RelativeLayout {
     private static DetailedChipView newInstance(Builder builder) {
         DetailedChipView detailedChipView = new DetailedChipView(builder.context);
         // avatar
-        if(builder.avatarUri != null)
+        if(builder.avatarUri != null && builder.chipAvatarUpdatable == null)
             detailedChipView.setAvatarIcon(builder.avatarUri);
         else if(builder.avatarDrawable != null)
             detailedChipView.setAvatarIcon(builder.avatarDrawable);
         else
             detailedChipView.setAvatarIcon(mLetterTileProvider.getLetterTile(builder.name));
+
+        if (builder.chipAvatarUpdatable != null)
+            builder.chipAvatarUpdatable.currentImageView(detailedChipView.mAvatarIconImageView);
 
         // background color
         if(builder.backgroundColor != null)
