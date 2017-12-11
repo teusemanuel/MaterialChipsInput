@@ -1,12 +1,20 @@
 package com.pchmn.sample.materialchipsinput;
 
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.pchmn.materialchips.model.ChipAvatarUpdatable;
 import com.pchmn.materialchips.model.ChipInterface;
 
-public class ContactChip implements ChipInterface {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class ContactChip implements ChipInterface, ChipAvatarUpdatable {
 
     private String id;
     private Uri avatarUri;
@@ -43,5 +51,14 @@ public class ContactChip implements ChipInterface {
     @Override
     public String getInfo() {
         return phoneNumber;
+    }
+
+    @Override
+    public void currentImageView(CircleImageView avatarImage) {
+        Glide.with(avatarImage.getContext())
+                .asBitmap()
+                .load(avatarUri)
+                .into(avatarImage);
+        Log.d("UpdateImage", "***************** UPDATE IMAGE Called *****************");
     }
 }

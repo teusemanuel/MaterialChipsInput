@@ -116,7 +116,7 @@ public class ContactListActivity extends AppCompatActivity {
 
                 }
 
-                ContactChip contactChip = new ContactChip(id, avatarUri, name, phoneNumber);
+                ContactChip contactChip = new ContactChip(id, Uri.parse("https://thumbs.dreamstime.com/b/old-man-avatar-icon-flat-style-male-user-icon-cartoon-man-avatar-vector-stock-91602443.jpg")/*avatarUri*/, name, phoneNumber);
                 // add contact to the list
                 mContactList.add(contactChip);
             }
