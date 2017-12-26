@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.EditText;
 
 import com.beloo.widget.chipslayoutmanager.ChipsLayoutManager;
 import com.pchmn.materialchips.adapter.ChipsAdapter;
@@ -66,6 +65,7 @@ public class ChipsInput extends ScrollViewMaxHeight {
     private FilterableListView mFilterableListView;
     // chip validator
     private ChipValidator mChipValidator;
+    private ChipsInputEditText mEditText;
 
     public ChipsInput(Context context) {
         super(context);
@@ -212,13 +212,16 @@ public class ChipsInput extends ScrollViewMaxHeight {
     }
 
     public ChipsInputEditText getEditText() {
-        ChipsInputEditText editText = new ChipsInputEditText(mContext);
-        if(mHintColor != null)
-            editText.setHintTextColor(mHintColor);
-        if(mTextColor != null)
-            editText.setTextColor(mTextColor);
+        if (mEditText ==  null) {
+            mEditText = new ChipsInputEditText(mContext);
+        }
 
-        return editText;
+        if(mHintColor != null)
+            mEditText.setHintTextColor(mHintColor);
+        if(mTextColor != null)
+            mEditText.setTextColor(mTextColor);
+
+        return mEditText;
     }
 
     public DetailedChipView getDetailedChipView(ChipInterface chip) {
