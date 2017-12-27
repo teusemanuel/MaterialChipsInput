@@ -65,6 +65,11 @@ public class FilterableListView extends RelativeLayout {
         // adapter
         mAdapter = new FilterableAdapter(mContext, mRecyclerView, filterableList, chipsInput, backgroundColor, textColor);
         mRecyclerView.setAdapter(mAdapter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mRecyclerView.setBackground(getResources().getDrawable(R.drawable.shadow_input));
+        } else {
+            mRecyclerView.setBackgroundDrawable(getResources().getDrawable(R.drawable.shadow_input));
+        }
         if(backgroundColor != null)
             mRecyclerView.getBackground().setColorFilter(backgroundColor.getDefaultColor(), PorterDuff.Mode.SRC_ATOP);
 

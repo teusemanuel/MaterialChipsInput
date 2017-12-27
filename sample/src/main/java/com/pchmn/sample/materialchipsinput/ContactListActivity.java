@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.ChipInterface;
+import com.pchmn.materialchips.util.ViewUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -67,6 +68,8 @@ public class ContactListActivity extends AppCompatActivity {
                 Log.e(TAG, "text changed: " + text.toString());
             }
         });
+
+        mChipsInput.filterablePadding(ViewUtil.dpToPx(60), 0, ViewUtil.dpToPx(50), 0);
 
         // show selected chips
         mValidateButton.setOnClickListener(new View.OnClickListener() {
