@@ -69,8 +69,6 @@ public class ContactListActivity extends AppCompatActivity {
             }
         });
 
-        mChipsInput.filterablePadding(ViewUtil.dpToPx(60), 0, ViewUtil.dpToPx(50), 0);
-
         // show selected chips
         mValidateButton.setOnClickListener(new View.OnClickListener() {
 

@@ -349,60 +349,6 @@ public class ChipsInput extends ScrollViewMaxHeight {
         mChipsAdapter.setFilterableListView(mFilterableListView);
     }
 
-    public void filterablePadding(int left, int top, int right, int bottom) {
-
-        if (left <= 0) {
-            left = mFilterableListView.getPaddingLeft();
-        }
-
-        if (top <= 0) {
-            top = mFilterableListView.getPaddingTop();
-        }
-
-        if (right <= 0) {
-            right = mFilterableListView.getPaddingRight();
-        }
-
-        if (bottom <= 0) {
-            bottom = mFilterableListView.getPaddingBottom();
-        }
-
-        mFilterableListView.setPadding(left, top, right, bottom);
-
-
-        /*mFilterableListView.post(new Runnable() {
-            @Override
-            public void run() {
-
-                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mFilterableListView.getLayoutParams();
-                int leftMargin = left;
-                int topMargin = top;
-                int rightMargin = right;
-                int bottomMargin = bottom;
-
-                if (leftMargin <= 0) {
-                    leftMargin = params.leftMargin;
-                }
-
-                if (topMargin <= 0) {
-                    topMargin = params.topMargin;
-                }
-
-                if (rightMargin <= 0) {
-                    rightMargin = params.rightMargin;
-                }
-
-                if (bottomMargin <= 0) {
-                    bottomMargin = params.bottomMargin;
-                }
-
-                params.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
-                mFilterableListView.requestLayout();
-                mFilterableListView.setLayoutParams(params);
-            }
-        });*/
-    }
-
     public List<? extends ChipInterface> getFilterableList() {
         return mChipList;
     }

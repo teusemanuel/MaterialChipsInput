@@ -48,6 +48,13 @@ public class FilterableListView extends RelativeLayout {
     private void init() {
         // inflate layout
         View view = inflate(getContext(), R.layout.list_filterable_view, this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            view.setBackground(getResources().getDrawable(R.drawable.shadow_input));
+        } else {
+            view.setBackgroundDrawable(getResources().getDrawable(R.drawable.shadow_input));
+        }
+
         // butter knife
         ButterKnife.bind(this, view);
 
@@ -65,11 +72,6 @@ public class FilterableListView extends RelativeLayout {
         // adapter
         mAdapter = new FilterableAdapter(mContext, mRecyclerView, filterableList, chipsInput, backgroundColor, textColor);
         mRecyclerView.setAdapter(mAdapter);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mRecyclerView.setBackground(getResources().getDrawable(R.drawable.shadow_input));
-        } else {
-            mRecyclerView.setBackgroundDrawable(getResources().getDrawable(R.drawable.shadow_input));
-        }
         if(backgroundColor != null)
             mRecyclerView.getBackground().setColorFilter(backgroundColor.getDefaultColor(), PorterDuff.Mode.SRC_ATOP);
 
@@ -82,13 +84,16 @@ public class FilterableListView extends RelativeLayout {
                 // position
                 ViewGroup rootView = (ViewGroup) mChipsInput.getRootView();
 
+                ViewGroup.MarginLayoutParams chipLayoutParams = (MarginLayoutParams) mChipsInput.getLayoutParams();
+
                 // size
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                        ViewUtil.getWindowWidth(mContext),
+                        ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
 
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                layoutParams.setMargins(chipLayoutParams.leftMargin, 0, chipLayoutParams.rightMargin, 0);
 
                 if(mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
                     layoutParams.bottomMargin = ViewUtil.getNavBarHeight(mContext);
